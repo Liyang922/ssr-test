@@ -13,6 +13,11 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'server.bundle.js'
   },
+  devtool: 'eval',
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  },
   module: {
     rules: [
       {
@@ -21,7 +26,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ]
           }
         }
       }

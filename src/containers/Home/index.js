@@ -1,5 +1,5 @@
 // 创建一个react组件
-import React, { Component } from 'react';
+import React from 'react';
 
 function Home() {
   return (
