@@ -1,9 +1,12 @@
 const Koa = require("koa");
 const app = new Koa();
 import Home from "src/containers/Home";
+// 使用jsx语法必须引入React
+import React from "react";
 import { renderToString } from "react-dom/server";
 
 app.use(async (ctx) => {
+  // <Home />而不是Home
   const html = renderToString(<Home />);
   ctx.body = `
     <!DOCTYPE html>
@@ -17,4 +20,4 @@ app.use(async (ctx) => {
     </html>`;
 });
 
-app.listen(3000);
+app.listen(8000);

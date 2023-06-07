@@ -1,9 +1,12 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   target: 'node',
   mode: 'development',
-  entry: './src/server/index.js',
+  entry: {
+    server: './src/server/index.js'
+  },
   resolve: {
     alias: {  
       src: path.resolve(__dirname, 'src')
@@ -11,13 +14,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'server.bundle.js'
+    filename: '[name].bundle.js'
   },
   devtool: 'eval',
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM"
-  },
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
@@ -26,10 +26,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react'
-            ]
+            presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }
       }
