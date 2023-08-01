@@ -1,28 +1,21 @@
-const Koa = require("koa");
-const app = new Koa();
-import Home from "src/containers/Home";
-// 使用jsx语法必须引入React
-import React from "react";
-import { renderToString } from "react-dom/server";
-const koaStatic = require("koa-static");
+// const Koa = require("koa");
+// const koaStatic = require("koa-static");
+// const Router = require("koa-router");
+import Koa from "koa";
+import koaStatic from "koa-static";
+import Router from "koa-router";
+import render from "./renderer";
 
-// koa static
+const app = new Koa();
+const router = new Router();
+
 app.use(koaStatic("public"));
 
-app.use(async (ctx) => {
-  // <Home />而不是Home
-  const html = renderToString(<Home />); // 不会处理事件
-  ctx.body = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>React SSR</title>
-        </head>
-        <body>
-          <div id="root">${html}</div>
-          <script src="client.bundle.js"></script>
-        </body>
-    </html>`;
+router.get('/', (ctx, next) => {
+  ctx.body = render(ctx);
 });
+app.use(router.routes());
 
-app.listen(8000);
+app.listen(8000, () => {
+  console.log("server is running at 8000");
+});
